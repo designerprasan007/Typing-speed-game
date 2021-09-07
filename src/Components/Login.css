@@ -1,0 +1,8 @@
+.card{
+    height: 300px;
+    text-align: center;
+    border: 1px solid black !important;
+    border-radius: 20px !important;
+    margin-top: 170px;
+    overflow: hidden;
+}
