@@ -19,7 +19,7 @@ const MainView = () =>{
     return(
         <>
             <p className="float-end">
-                <a href="">Source Code</a></p>
+                <a href="https://github.com/designerprasan007/Typing-speed-game">Source Code</a></p>
             {!loggedIn && <Login loggedin={loggedin} Username={Username} UsernameFun={UsernameFun} />}
             {loggedIn && <Game Username={Username} />}
         </>

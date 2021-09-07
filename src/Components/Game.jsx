@@ -35,7 +35,7 @@ const Game = ({Username}) =>{
         }
         return () => {
             clearTimeout(timerId);
-          };
+          };// eslint-disable-next-line
       }, [seconds]);
 
         const Textchanged = (e) =>{
