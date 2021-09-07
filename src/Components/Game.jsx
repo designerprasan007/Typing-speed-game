@@ -4,14 +4,14 @@ import Result from './Result';
 import { Stories } from "../Helpers/Stories";
 const Game = ({Username}) =>{
     const [textVal, setTextVal] = useState("");
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(1);
     const [finalResult, setFinalResult] = useState({coorect:0, wrongs:0, chars:0})
-
+    const [started, setStarted] = useState(false)
     const StoryDiv = document.getElementById('StoryDiv');
     const TextArea = document.getElementById('inputTextarea');
     const loadStory = () =>{
         StoryDiv.innerHTML = "";
-        TextArea.value = "";
+        setTextVal("");
         TextArea.disabled = false;
         const randomstory = Math.floor(Math.random() * Stories.length);
         const storyData = Stories[randomstory].story;
@@ -21,6 +21,7 @@ const Game = ({Username}) =>{
             StoryDiv.appendChild(characterSpan);
         });
         setSeconds(60);
+        setStarted(true);
     }
     // loadStory()
 
@@ -60,24 +61,28 @@ const Game = ({Username}) =>{
     const handleChange = (e) => {
         e.preventDefault();
       };
-      const finalResultFun = (e) =>{
-          e.target.disabled = true
+      const finalResultFun = () =>{
+        //   e.target.disabled = true
         var corrects = document.querySelectorAll(".correct").length;
         var wrongs = document.querySelectorAll(".incorrect").length;
         var totalChar = corrects + wrongs;
+        if(totalChar < 1){
+            alert('Type Something before Result');
+            return
+        }
         setFinalResult({...finalResult, coorect:corrects, wrongs:wrongs, chars:totalChar })
-        console.log(finalResult);
       }
     return(
         <div className="outerHero">
             <div className="herobody">
             {finalResult.chars >= 1 ? <Result Username={Username}  finalResult={finalResult} /> :
             <>
-            <h2 id="timer">{seconds}</h2>
-            {seconds === 'Times Up!' && <button className="btn btn-info" onClick={(e) => finalResultFun(e)}>Result</button>}
+            {started &&  <><h2 id="timer">{seconds}</h2>
+            {seconds === 'Times Up!' && <button className="btn btn-info" onClick={finalResultFun}>Result</button>}
+            </>}
                 <div>
-                    <button className="btn btn-primary float-end" onClick={loadStory}>Reset</button>
-                    <textarea value={textVal} id="inputTextarea"   onCut={handleChange}
+                    <button className="btn btn-primary float-end" onClick={loadStory}>{started ? 'Reset' : 'Start'}</button>
+                    <textarea value={textVal} id="inputTextarea"    onCut={handleChange}
                     onCopy={handleChange} onPaste={handleChange} placeholder="Start Typing here..." onChange={(e) => Textchanged(e)}></textarea>
                 </div>
                 <div  id="StoryDiv"></div>
