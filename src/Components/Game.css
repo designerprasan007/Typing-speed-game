@@ -1,8 +1,9 @@
 .outerHero{
     align-items: center;
-    display: flex;
     min-height: 100%;
-    padding-top: 5%;
+    padding: 5%;
+    top: auto;
+    padding-top: 75px;
 }
 .herobody {
     margin: 0 auto;
